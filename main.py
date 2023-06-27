@@ -6,7 +6,7 @@ from game import Game
 pygame.init()
 
 # Definir el tamaño de la ventana
-width, height = 800, 600
+width, height = 600, 400
 
 # Crear la ventana
 window = pygame.display.set_mode((width, height))

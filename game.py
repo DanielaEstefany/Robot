@@ -108,7 +108,17 @@ class Game:
                 print("Error al solicitar los resultados del reconocimiento de voz; {0}".format(e))
 
         if self.movement_requested:
+            if self.movement_requested == "escuela":
+                self.move_robot_to_place("E")
+            elif self.movement_requested == "universidad":
+                self.move_robot_to_place("U")
             pygame.time.wait(200)  # Pausa de 200 milisegundos entre cada movimiento del robot
+
+        """
+        if self.movement_requested:
+            pygame.time.wait(200)  # Pausa de 200 milisegundos entre cada movimiento del robot
+        """
+        
 
     def render(self):
         imagen_robot = pygame.image.load("gordo.png")
@@ -452,21 +462,8 @@ class Game:
             matriz.append(fila)  # Agregar fila a la matriz
         matriz[x][y] = 'Q'
         return matriz
-    
-    def move_robot_to_place(self, place):
-        # Calcular la dirección del movimiento hacia la escuela
-        robotPos = (self.robot_block[0]-1,self.robot_block[1]-1)
-        caminoPos = [(self.robot_block[0]-1,self.robot_block[1]-1)]
-        camino = self.buscar_queso(self.matrizG, robotPos, caminoPos, place)
-        print(str(camino))
-        for coordenada in camino:
-            next_block = (coordenada[0] + 1, coordenada[1] + 1)
-            self.robot_block = next_block
 
-            time.sleep(1)
-            self.render()
-
-    """def move_robot_to_school(self):
+    def move_robot_to_school(self):
         # Calcular la dirección del movimiento hacia la escuela
         school = '10'
         robotPos = (self.robot_block[0]-1,self.robot_block[1]-1)
