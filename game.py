@@ -17,27 +17,27 @@ class Game:
         self.mapa = pygame.transform.scale(self.mapa, (self.width, self.height))
 
         self.matrizG = [
-        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],    
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
         ['#', '#', '#', 'K', '#', '#', '#', '#', '#', '#', '#', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'R', '#', '#', '#'],
-        ['#', '#', '#', 'K', '#', '#', '#', '#', '#', '#', '#', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'R', '#', '#', '#'],
+        ['#', '#', '#', 'K', '#', '#', '#', '#', '#', '#', '#', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'R', '#', '#', '#'],	
         ['#', '1', '#', 'K', '#', '2', '#', '3', '#', '#', '4', 'N', 'N', '5', '#', '#', '6', '#', '7', '#', '#', '8', 'R', '#', '9', '#'],
         ['A', 'A', 'A','AK', 'A', 'A', 'A', 'A', 'A', 'A', 'A','AN','BN', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'BR','B', 'B', 'B'],
         ['#', '#', '#', 'K', '#', '#', '#', '#', '#', '#', '#', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'R', '#', '#', '#'],
         ['#', '#', '#', 'K', '#', '11', '#','12','#', '13','#', 'N', 'N', '#', '14','#', '15','#','16', '#', '17','#', 'R', '#', '18','#'],
         ['#','10', '#', 'K', '#', '#','CM', 'C', 'C', 'C', 'C','CN','DN', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D', 'D','DR', 'D','DS', 'D'],
-        ['Z', 'Z', 'Z', 'K', '19','#', 'M', '#', '#', '#','#', 'N', 'N', '#', '21','#', '#', '#', '#', '#', '#', '#', '#', '#', 'S', 'S'],
-        ['#', '#', '#', 'K ','#', '#', 'M', '#', '#', '#', '20', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'S', 'S'],
+        ['Z', 'Z', 'Z', 'K', '19','#', 'M', '#', '#', '20','#', 'N', 'N', '#', '21','#', '#', '#', '#', '#', '#', '#', '#', '#', 'S', 'S'],
+        ['#', '#', '#', 'K ','#', '#', 'M', '#', '#', '#', '#', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'S', 'S'],
         ['#', '#', '#', 'K', '#', '#', 'M', '#', '#', '#', '#', 'N', 'N', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'S', 'S'],
-        ['#', '22','#', 'K', '23','#', 'M', '24','#', '25','NE','N', 'N','NE', '#', '26','#','27', '#','28', '#', '#','29', '#', 'S', '#'],
-        ['E', 'E', 'E','EK', 'E', 'E','EM', 'E', 'E', 'E', 'E', '30','#', 'E', 'F', 'F', 'F', 'F','FP', 'F', 'F', 'F', 'F', 'F','FS','31'],
-        ['#', '#', '#', 'L', '#', '#', 'M', '#', '#', '#','OE', 'O', 'O','OE', '#', '#', '#', '#', 'P', '#', '#', 'Q', '#', '#', '#', ' '],
+        ['#', '22','#', 'K', '23','#', 'M', '24','#', '25','NE','N', 'N','NF', '#', '#','26', '#', '27','#', '28','#','29', '#', 'S', '#'],
+        ['E', 'E', 'E','EK', 'E', 'E','EM', 'E', 'E', 'E', 'E', '30','#', 'F', 'F', 'F', 'F', 'F','FP', 'F', 'F', 'F', 'F', 'F','FS','31'],
+        ['#', '#', '#', 'L', '#', '#', 'M', '#', '#', '#','OE', 'O', 'O','OF', '#', '#', '#', '#', 'P', '#', '#', 'Q', '#', '#', '#', ' '],
         ['#', '#', '#', 'L', '#', '#', 'M', '#', '#', '#', '#', 'O', 'O', '#', '#', '#', '#', '#', 'P', '#', '#', 'Q', '#', '#', '#', '#'],
         ['#', '#', '#', 'L', '#', '#', 'M', '#', '#', '#', '#', 'O', 'O', '#', '#', '#', '#', '#', 'P', '#', '#', 'Q', '#', '#', '#', '#'],
         ['#', '#', '32','L','33', '#', 'M', '#','34', '#','35', 'O', 'O', '#', '#', '#','36', '#', 'P','37', '#', 'Q','38', '#','39', '#'],
         ['G', 'G', 'G','GL', 'G', 'G','GM', 'G', 'G', 'G', 'G','GO','GO', 'V', 'V', 'V', 'V', 'V','HP', 'H', 'H','HQ', 'H', 'H', 'H', 'H'],
         ['#', '#', '#', 'L', '#', '#', 'M', '#', '#', '#', '#', 'O', 'O', '#', '#', '#', '#', '#', 'P', '#', '#', 'Q', '#', '#', '#', '#'],
-        ['#', '40','#', 'L','41', '#', 'M', '#', '#','42', '#', 'O', 'O', '#','43', '#','44', '#', 'P', '#','45', 'Q', '#','46', '#','47'],
-        ['I', 'I', 'I','IL', 'I', 'I','IM', 'I', 'I', 'I', 'I','IO','IO', 'V', 'V', 'V', 'V', 'V', 'P', 'J', 'J','JQ', 'J', 'J', 'J', 'J']
+        ['#', '40','#', 'L','41', '#', 'M', '#', '#','42', '#', 'O', 'O', '43','#', '#','44', '#', 'P', '#','45', 'Q', '#','46', '#','47'],
+        ['I', 'I', 'I','IL', 'I', 'I','IM', 'I', 'I', 'I', 'I','IO','IO', 'V', 'V', 'V', 'V', 'V', 'JP', 'J', 'J','JQ','J', 'J', 'J', 'J']
         ]
 
         self.block_width = self.width // 26
@@ -436,8 +436,61 @@ class Game:
                     if "adjetivo" and "inolvidable"  in text.lower():
                         self.movement_requested = "calle del adjetivo esquina calle profe inolvidable"
                         self.move_robot_to_place('AK') 
-                else:
-                    print("no se hacer eso")
+                    elif "subjuntivo" and "inolvidable"  in text.lower():
+                        self.move_robot_to_place('AN') 
+                    elif "subjuntivo" and "vocabulario"  in text.lower():
+                        self.move_robot_to_place('AB')
+                    elif "vocabulario" and "dudas"  in text.lower():
+                        self.move_robot_to_place('BR')
+                    elif "hechos" and "ser y estar"  in text.lower():
+                        self.move_robot_to_place('CM') 
+                    elif "subjuntivo" and "ser y estar"  in text.lower():
+                        self.move_robot_to_place('CN') 
+                    elif "subjuntivo" and "cervantes"  in text.lower():
+                        self.move_robot_to_place('DN') 
+                    elif "cervantes" and "dudas"  in text.lower():
+                        self.move_robot_to_place('DR') 
+                    elif "cervantes" and "ene"  in text.lower():
+                        self.move_robot_to_place('DS') 
+                    elif "adjetivo" and "español"  in text.lower():
+                        self.move_robot_to_place('EK') 
+                    elif "hechos" and "español"  in text.lower():
+                        self.move_robot_to_place('EM') 
+                    elif "subjuntivo" and "español"  in text.lower():
+                        self.move_robot_to_place('NE') 
+                    elif "indicativo" and "español"  in text.lower():
+                        self.move_robot_to_place('OE') 
+                    elif "subjuntivo" and "profe de ele"  in text.lower():
+                        self.move_robot_to_place('NF') 
+                    elif "indicativo" and "profe de ele"  in text.lower():
+                        self.move_robot_to_place('OF') 
+                    elif "verbos" and "profe de ele"  in text.lower():
+                        self.move_robot_to_place('FP') 
+                    elif "ene" and "profe de ele"  in text.lower():
+                        self.move_robot_to_place('FS') 
+                    elif "sustantivo" and "siele"  in text.lower():
+                        self.move_robot_to_place('GL') 
+                    elif "sustantivo" and "hechos"  in text.lower():
+                        self.move_robot_to_place('GM') 
+                    elif "sustantivo" and "indicativo"  in text.lower():
+                        self.move_robot_to_place('GO') 
+                    elif "gusta" and "verbos"  in text.lower():
+                        self.move_robot_to_place('HP') 
+                    elif "gusta" and "gramatica"  in text.lower():
+                        self.move_robot_to_place('HQ')
+                    elif "errores" and "siele"  in text.lower():
+                        self.move_robot_to_place('IL') 
+                    elif "errores" and "hechos"  in text.lower():
+                        self.move_robot_to_place('IM')   
+                    elif "errores" and "indicativo"  in text.lower():
+                        self.move_robot_to_place('IO')  
+                    elif "verbos" and "por y para"  in text.lower():
+                        self.move_robot_to_place('JP')  
+                    elif "gramatica" and "por y para"  in text.lower():
+                        self.move_robot_to_place('JQ')  
+                      
+            else:
+                print("no se hacer eso")
         
 
     def crearMatriz(self, x, y):
