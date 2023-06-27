@@ -2,6 +2,7 @@ import time
 import pygame
 import speech_recognition as sr
 import sys
+from collections import deque
 
 class Game:
     def __init__(self, window, width, height):
@@ -24,6 +25,30 @@ class Game:
             [(12, 1)]+ [(12, 3)]+
             [(14, col) for col in range(1, 3)] + [(14, col) for col in range(5, 6)] + [(14, col) for col in range(8, 11)]
         )
+
+        self.matrizG = [
+        ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
+        ['#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#'],
+        ['#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#'],
+        ['#', '1', '#', ' ', '#', '2', '#', '3', '#', '#', ' ', ' ', ' ', ' ', '#', '#', ' ', '#', ' ', '#', '#', ' ', ' ', '#', ' ', '#'],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        ['#', '#', '#', ' ', '#', '#', '#', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#'],
+        ['#', '#', '#', ' ', '#', ' ', '#', ' ', '#', ' ', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#', ' ', '#'],
+        ['#', 'E', '#', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', ' '],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', ' '],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', ' '],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', ' ', ' ', ' ', ' ', '#', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', ' '],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#'],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#'],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', ' ', 'U', '#', ' ', '#', '#', '#', '#'],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', '#', '#', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#'],
+        ['#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#', ' ', ' ', ' ', '#', '#', '#', '#', ' ', '#', '#', ' ', '#', '#', '#', '#'],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ]
 
         self.block_width = self.width // 26
         self.block_height = self.height // 21
@@ -147,34 +172,30 @@ class Game:
             self.movement_requested = "pizza"
         
 
+    def crearMatriz(self, x, y):
+        matriz = []
+
+        # Crear filas
+        for i in range(21):
+            fila = []
+            # Crear columnas
+            for j in range(26):
+                fila.append('.')  # Agregar elementos vacíos a la fila
+            matriz.append(fila)  # Agregar fila a la matriz
+        matriz[x][y] = 'Q'
+        return matriz
+
     def move_robot_to_school(self):
-        while True:
-            # Calcular la dirección del movimiento hacia la escuela
-            dx = self.school_block[1] - self.robot_block[1]
-            dy = self.school_block[0] - self.robot_block[0]
+        # Calcular la dirección del movimiento hacia la escuela
+        school = 'E'
+        robotPos = (self.robot_block[0]-1,self.robot_block[1]-1)
+        caminoPos = [(self.robot_block[0]-1,self.robot_block[1]-1)]
+        camino = self.buscar_queso(self.matrizG, robotPos, caminoPos, school)
+        print(str(camino))
+        for coordenada in camino:
+            next_block = (coordenada[0] + 1, coordenada[1] + 1)
+            self.robot_block = next_block
 
-            movido = False
-            # Mover el robot bloque por bloque hacia la escuela
-            if dx != 0:
-                # Mover horizontalmente
-                step = dx // abs(dx)
-                next_block = (self.robot_block[0], self.robot_block[1] + step)
-                if self.is_block_valid(next_block):
-                    self.robot_block = next_block
-                    movido = True
-                    print("x: " + str(next_block))
-            if not movido and dy != 0:
-                # Mover verticalmente
-                step = dy // abs(dy)
-                next_block = (self.robot_block[0] + step, self.robot_block[1])
-                if self.is_block_valid(next_block):
-                    self.robot_block = next_block
-                    print("y: " + str(next_block))
-
-            # Verificar si el robot ha llegado a la escuela
-            if self.robot_block == self.school_block:
-                self.movement_requested = False
-                break
             time.sleep(1)
             self.render()
 
@@ -182,33 +203,54 @@ class Game:
         if block in self.blocked_blocks:
             return False
         return True
+    
+    def buscar_queso(self, laberinto, raton_posicion, camino, destino):
 
+        filas = len(laberinto)
+        columnas = len(laberinto[0])
+
+        raton_fila, raton_columna = raton_posicion
+
+        visitados = set()
+        visitados.add((raton_fila, raton_columna))
+
+        queue = deque([(raton_fila, raton_columna, [])])
+
+        while queue:
+            fila, columna, camino = queue.popleft()
+
+            if laberinto[fila][columna] == destino:
+                return camino
+
+            for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                nueva_fila = fila + dx
+                nueva_columna = columna + dy
+
+                if (
+                    nueva_fila >= 0 and nueva_fila < filas and
+                    nueva_columna >= 0 and nueva_columna < columnas and
+                    laberinto[nueva_fila][nueva_columna] != '#' and
+                    (nueva_fila, nueva_columna) not in visitados
+                ):
+                    visitados.add((nueva_fila, nueva_columna))
+                    queue.append((nueva_fila, nueva_columna, camino + [(nueva_fila, nueva_columna)]))
+
+        return None
+
+    
     def move_robot_to_university(self):
-        while True:
-            # Calcular la dirección del movimiento hacia la universidad
-            dx = self.universidad_block[1] - self.robot_block[1]
-            dy = self.universidad_block[0] - self.robot_block[0]
+        # Calcular la dirección del movimiento hacia la escuela
+        universidad = 'U'
+        robotPos = (self.robot_block[0]-1,self.robot_block[1]-1)
+        caminoPos = [(self.robot_block[0]-1,self.robot_block[1]-1)]
+        camino = self.buscar_queso(self.matrizG, robotPos, caminoPos, universidad)
+        print(str(camino))
+        for coordenada in camino:
+            next_block = (coordenada[0] + 1, coordenada[1] + 1)
+            self.robot_block = next_block
 
-            # Mover el robot bloque por bloque hacia la universidad
-            if dx != 0:
-                # Mover horizontalmente
-                step = dx // abs(dx)
-                next_block = (self.robot_block[0], self.robot_block[1] + step)
-                if next_block not in self.blocked_blocks:
-                    self.robot_block = next_block
-            elif dy != 0:
-                # Mover verticalmente
-                step = dy // abs(dy)
-                next_block = (self.robot_block[0] + step, self.robot_block[1])
-                if next_block not in self.blocked_blocks:
-                    self.robot_block = next_block
-
-            # Verificar si el robot ha llegado a la universidad
-            if self.robot_block == self.universidad_block:
-                self.movement_requested = False
-                break
             time.sleep(1)
-            self.render()   
+            self.render()
 
     def move_robot_to_circo(self):
         while True:

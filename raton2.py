@@ -1,46 +1,36 @@
-def buscar_queso(laberinto, raton_posicion, camino):
-    # Obtenemos las dimensiones del laberinto
+from collections import deque
+
+def buscar_queso(laberinto, raton_posicion):
     filas = len(laberinto)
     columnas = len(laberinto[0])
 
-    # Obtenemos las coordenadas del ratón
     raton_fila, raton_columna = raton_posicion
-    if raton_fila < 0 or raton_fila >= filas or raton_columna < 0 or raton_columna >= columnas:      
-        return None 
 
-    # Verificamos si el ratón ha encontrado el queso
-    if laberinto[raton_fila][raton_columna] == 'Q':
-        return camino
+    visitados = set()
+    visitados.add((raton_fila, raton_columna))
 
-    # Verificamos si el ratón se encuentra en una posición válida
-    if (
-        laberinto[raton_fila][raton_columna] == '#' or
-        laberinto[raton_fila][raton_columna] == 'X'
-    ):
-        return None
+    queue = deque([(raton_fila, raton_columna, [])])
 
-    # Marcamos la posición actual del ratón como visitada
-    laberinto[raton_fila][raton_columna] = 'X'
+    while queue:
+        fila, columna, camino = queue.popleft()
 
-    # Exploramos las posibles direcciones en orden: arriba, derecha, abajo, izquierda
-    camino_actual = None
+        if laberinto[fila][columna] == 'Q':
+            return camino
 
-    if not camino_actual:
-        camino_actual = buscar_queso(laberinto, (raton_fila - 1, raton_columna), camino + [(raton_fila - 1, raton_columna)])  # Arriba
+        for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+            nueva_fila = fila + dx
+            nueva_columna = columna + dy
 
-    if not camino_actual:
-        camino_actual = buscar_queso(laberinto, (raton_fila, raton_columna + 1), camino + [(raton_fila, raton_columna + 1)])  # Derecha
+            if (
+                nueva_fila >= 0 and nueva_fila < filas and
+                nueva_columna >= 0 and nueva_columna < columnas and
+                laberinto[nueva_fila][nueva_columna] != '#' and
+                (nueva_fila, nueva_columna) not in visitados
+            ):
+                visitados.add((nueva_fila, nueva_columna))
+                queue.append((nueva_fila, nueva_columna, camino + [(nueva_fila, nueva_columna)]))
 
-    if not camino_actual:
-        camino_actual = buscar_queso(laberinto, (raton_fila + 1, raton_columna), camino + [(raton_fila + 1, raton_columna)])  # Abajo
-
-    if not camino_actual:
-        camino_actual = buscar_queso(laberinto, (raton_fila, raton_columna - 1), camino + [(raton_fila, raton_columna - 1)])  # Izquierda
-
-    # Si ninguna dirección conduce al queso, retrocedemos
-    laberinto[raton_fila][raton_columna] = '.'
-
-    return camino_actual
+    return None
 
 # Ejemplo de uso
 laberinto = [
@@ -67,5 +57,5 @@ laberinto = [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
         ]
  
-camino = buscar_queso(laberinto, (13, 11), [(13, 11)])
-print(str(camino))
+camino = buscar_queso(laberinto, (13, 11))
+print("Camino:", camino)
